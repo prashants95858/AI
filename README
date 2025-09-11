@@ -1,1 +1,39 @@
-#README file
+# 🛠️ TSX Code Optimizer with OpenAI / OpenRouter
+
+This project allows you to upload `.tsx` files or paste TypeScript code, sends them to an LLM (like GPT-3.5 or Mistral) via FastAPI backend, and displays optimized results in a React + Next.js frontend.
+
+---
+
+## 📦 Backend (Python + FastAPI)
+
+### ✅ Requirements
+
+- Python 3.13+
+- [Virtualenv](https://virtualenv.pypa.io/en/latest/)
+- OpenRouter or OpenAI API Key
+
+---
+
+## 📦 Frontend (React + NextJS)
+
+- Node 22+
+
+---
+
+### 📁 Setup backend
+
+```bash
+cd backend
+python3 -m venv venv # here we can use python or python3 based on what you have selected
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload # to start the backend server
+```
+
+### 📁 Setup frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
