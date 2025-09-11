@@ -9,7 +9,7 @@ client = OpenAI(
     api_key=os.getenv("OPEN_ROUTER_API_KEY")
 )
 
-async def optimize_code(code: str) -> str:
+async def optimize_tsx_code(code: str) -> str:
     response = client.chat.completions.create(
         model=os.getenv("OPEN_ROUTER_MODEL"),  # or any model you choose
         messages=[

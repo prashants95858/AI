@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-# from app.openai_service import optimize_code
-from app.open_router_service import optimize_code
+# from app.openai_service import optimize_tsx_code
+from app.open_router_service import optimize_tsx_code
 
 app = FastAPI()
 
@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/optimize-code")
+@app.post("/optimize-tsx-code")
 async def optimize(
     code: str = Form(None),
     file: UploadFile = File(None),
@@ -28,5 +28,5 @@ async def optimize(
     if not code:
         return {"error": "No code or file provided."}
 
-    optimized = await optimize_code(code)
+    optimized = await optimize_tsx_code(code)
     return {"optimized": optimized}

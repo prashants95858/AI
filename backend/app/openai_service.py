@@ -5,7 +5,7 @@ from openai import OpenAI
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-async def optimize_code(code: str) -> str:
+async def optimize_tsx_code(code: str) -> str:
     try:
         prompt = f"Optimize the following TypeScript/TSX code:\n\n{code}"
         response = client.chat.completions.create(

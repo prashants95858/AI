@@ -27,7 +27,7 @@ const CodeOptimizer = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/optimize-code",
+        "http://localhost:8000/optimize-tsx-code",
         formData,
         {
           headers: {
