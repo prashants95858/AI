@@ -1,31 +1,43 @@
-"use client";
+"use client"; // Next.js directive for client-side component
 
+// Import React and hooks
 import React, { useState } from "react";
+// Import axios for HTTP requests
 import axios from "axios";
 
+// Main component for TSX code optimization UI
 const CodeOptimizer = () => {
+  // State for uploaded file
   const [file, setFile] = useState<File | null>(null);
+  // State for pasted code
   const [code, setCode] = useState("");
+  // State for output from backend
   const [output, setOutput] = useState("");
+  // State for loading indicator
   const [loading, setLoading] = useState(false);
 
+  // Handle form submission for code/file optimization
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate input: require file or code
     if (!file && !code.trim()) {
       setOutput("Please upload a file or paste some code.");
       return;
     }
-
+    setOutput("");
     setLoading(true);
     const formData = new FormData();
     if (file) {
+      // If file is uploaded, append to form data
       formData.append("file", file);
     } else {
+      // Otherwise, append code string
       formData.append("code", code);
     }
 
     try {
+      // Send POST request to backend API
       const res = await axios.post(
         "http://localhost:8000/optimize-tsx-code",
         formData,
@@ -35,25 +47,30 @@ const CodeOptimizer = () => {
           },
         }
       );
+      // Set output to optimized code or error message
       setOutput(res.data.optimized || res.data.error);
     } catch (err) {
+      // Log error and show generic error message
       console.error(err);
       setOutput("Something went wrong.");
     }
     setLoading(false);
   };
 
+  // Render UI for code/file upload, submit, and output
   return (
     <div className="p-6 max-w-3xl mx-auto">
+      {/* Title */}
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         ⚡ TSX Optimizer
       </h1>
 
+      {/* Form for file upload or code paste */}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-5 bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
       >
-        {/* File Upload */}
+        {/* File Upload Section */}
         <label className="block">
           <span className="text-gray-700 font-medium">Upload .tsx File</span>
           <input
@@ -61,7 +78,7 @@ const CodeOptimizer = () => {
             accept=".tsx"
             onChange={(e) => {
               setFile(e.target.files?.[0] || null);
-              setCode("");
+              setCode(""); // Clear code when file is selected
             }}
             className="mt-2 block w-full text-sm text-gray-700 
                        border border-gray-300 rounded-lg cursor-pointer 
@@ -73,7 +90,7 @@ const CodeOptimizer = () => {
           />
         </label>
 
-        {/* Text Area */}
+        {/* Text Area Section for code paste */}
         <label className="block">
           <span className="text-gray-700 font-medium">Or Paste Code</span>
           <textarea
@@ -82,7 +99,7 @@ const CodeOptimizer = () => {
                        h-48 font-mono text-sm resize-none"
             placeholder="Paste TypeScript/TSX code here..."
             value={code}
-            disabled={!!file}
+            disabled={!!file} // Disable textarea if file is selected
             onChange={(e) => setCode(e.target.value)}
           />
         </label>
@@ -98,7 +115,7 @@ const CodeOptimizer = () => {
         </button>
       </form>
 
-      {/* Output Section */}
+      {/* Output Section for optimized code or errors */}
       {output && (
         <div className="mt-6 p-5 border border-gray-300 bg-gray-50 rounded-lg shadow-inner">
           <h2 className="font-semibold mb-3 text-gray-800">Optimized Code:</h2>
@@ -111,4 +128,5 @@ const CodeOptimizer = () => {
   );
 };
 
+// Export the component as default
 export default CodeOptimizer;

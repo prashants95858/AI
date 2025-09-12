@@ -1,10 +1,16 @@
+
+/* Import Tailwind CSS for utility classes */
 @import "tailwindcss";
 
+
+/* Define default color variables for light mode */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+
+/* Inline theme variables for use with Tailwind and custom styles */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,6 +18,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
+/* Dark mode overrides using media query */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,12 +27,16 @@
   }
 }
 
+
+/* Apply background, foreground color, and font to body */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+/* Use monospace font for textarea elements */
 textarea {
   font-family: monospace;
 }

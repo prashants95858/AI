@@ -1,22 +1,37 @@
+
+# Standard library for environment variables
 import os
+# Load environment variables from .env file
 from dotenv import load_dotenv
+# Import OpenAI client for API interaction
 from openai import OpenAI
 
+# Load environment variables from .env file
 load_dotenv()
+# Initialize OpenAI client with API key from environment
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+
+# Asynchronous function to optimize TSX code using OpenAI API
+# Takes TypeScript/TSX code as input and returns optimized code
 async def optimize_tsx_code(code: str) -> str:
     try:
+        # Create prompt for code optimization
         prompt = f"Optimize the following TypeScript/TSX code:\n\n{code}"
+        # Call OpenAI chat completion API
         response = client.chat.completions.create(
-            model=os.getenv("OPENAI_MODEL"), #gpt-5, 
+            model=os.getenv("OPENAI_MODEL"), # Model name from environment (e.g., gpt-5)
             messages=[
+                # System prompt to instruct the AI
                 {"role": "system", "content": "You are a TypeScript expert who improves React/TSX code."},
+                # User prompt with the code to optimize
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.3,
-            max_tokens=200,
+            temperature=0.3,  # Controls randomness of output
+            max_tokens=200,   # Limit response length
         )
+        # Return the optimized code from the response
         return response.choices[0].message.content.strip()
     except Exception as e:
+        # Return error message if API call fails
         return f"Error: {str(e)}"
