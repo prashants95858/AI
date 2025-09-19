@@ -15,6 +15,21 @@ const CodeOptimizer = () => {
   const [output, setOutput] = useState("");
   // State for loading indicator
   const [loading, setLoading] = useState(false);
+  // State for user prompt
+  const [userPrompt, setUserPrompt] = useState("");
+  // State for dynamic prompt
+  const [systemPrompt, setSystemPrompt] = useState("");
+  // Reference for file input
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+  // Function to reset form to default state
+  const resetToDefault = () => {
+    setFile(null);
+    inputRef.current!.value = "";
+    setCode("");
+    setUserPrompt("");
+    setSystemPrompt("");
+  };
 
   // Handle form submission for code/file optimization
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,6 +51,14 @@ const CodeOptimizer = () => {
       formData.append("code", code);
     }
 
+    // Add user prompt and system prompt to form data
+    if (userPrompt.trim()) {
+      formData.append("user_prompt", userPrompt);
+    }
+    if (systemPrompt.trim()) {
+      formData.append("system_prompt", systemPrompt);
+    }
+
     try {
       // Send POST request to backend API
       const res = await axios.post(
@@ -49,6 +72,7 @@ const CodeOptimizer = () => {
       );
       // Set output to optimized code or error message
       setOutput(res.data.optimized || res.data.error);
+      resetToDefault();
     } catch (err) {
       // Log error and show generic error message
       console.error(err);
@@ -70,10 +94,34 @@ const CodeOptimizer = () => {
         onSubmit={handleSubmit}
         className="flex flex-col gap-5 bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
       >
+        {/* System Prompt Input */}
+        <label className="block">
+          <span className="text-gray-700 font-medium">System Prompt</span>
+          <input
+            type="text"
+            className="mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            placeholder="Enter system prompt (instruction)"
+            value={systemPrompt}
+            onChange={(e) => setSystemPrompt(e.target.value)}
+          />
+        </label>
+
+        {/* User Prompt Input */}
+        <label className="block">
+          <span className="text-gray-700 font-medium">User Prompt</span>
+          <input
+            type="text"
+            className="mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            placeholder="Enter user prompt (instruction)"
+            value={userPrompt}
+            onChange={(e) => setUserPrompt(e.target.value)}
+          />
+        </label>
         {/* File Upload Section */}
         <label className="block">
           <span className="text-gray-700 font-medium">Upload .tsx File</span>
           <input
+            ref={inputRef}
             type="file"
             accept=".tsx"
             onChange={(e) => {

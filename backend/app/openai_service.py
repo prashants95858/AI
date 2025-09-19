@@ -14,16 +14,24 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Asynchronous function to optimize TSX code using OpenAI API
 # Takes TypeScript/TSX code as input and returns optimized code
-async def optimize_tsx_code(code: str) -> str:
+async def optimize_tsx_code(code: str, system_prompt: str = None, user_prompt: str = None) -> str:
     try:
         # Create prompt for code optimization
-        prompt = f"Optimize the following TypeScript/TSX code:\n\n{code}"
+        if user_prompt:
+            prompt = f"{user_prompt}\n\n{code}"
+        else:
+            prompt = f"Optimize the following TypeScript/TSX code:\n\n{code}"
+
+        # Default system prompt if not provided
+        if not system_prompt:
+            system_prompt = "You are a TypeScript expert who improves React/TSX code."
+    
         # Call OpenAI chat completion API
         response = client.chat.completions.create(
             model=os.getenv("OPENAI_MODEL"), # Model name from environment (e.g., gpt-5)
             messages=[
                 # System prompt to instruct the AI
-                {"role": "system", "content": "You are a TypeScript expert who improves React/TSX code."},
+                {"role": "system", "content": system_prompt},
                 # User prompt with the code to optimize
                 {"role": "user", "content": prompt}
             ],

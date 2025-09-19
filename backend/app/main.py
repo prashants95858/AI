@@ -29,6 +29,8 @@ app.add_middleware(
 async def optimize(
     code: str = Form(None),
     file: UploadFile = File(None),
+    user_prompt: str = Form(None),
+    system_prompt: str = Form(None)
 ):
     # Validate file extension if a file is uploaded
     if file and not file.filename.endswith(".tsx"):
@@ -44,5 +46,5 @@ async def optimize(
         return {"error": "No code or file provided."}
 
     # Call the optimization service and return the result
-    optimized = await optimize_tsx_code(code)
+    optimized = await optimize_tsx_code(code, system_prompt, user_prompt)
     return {"optimized": optimized}

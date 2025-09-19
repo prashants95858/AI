@@ -18,14 +18,27 @@ client = OpenAI(
 
 # Asynchronous function to optimize TSX code using OpenRouter API
 # Takes TypeScript/TSX code as input and returns optimized code
-async def optimize_tsx_code(code: str) -> str:
+async def optimize_tsx_code(
+    code: str,
+    system_prompt: str = None,
+    user_prompt: str = None
+) -> str:
+    # Create prompt for code optimization
+    if user_prompt:
+        prompt = f"{user_prompt}\n\n{code}"
+    else:
+        prompt = f"Optimize & provide proper code for the following TypeScript/TSX code:\n\n{code}"
+
+    # Default system prompt if not provided
+    if not system_prompt:
+        system_prompt = "You are a TypeScript expert who improves React/TSX code."
+        
+    # Call OpenRouter chat completion API
     response = client.chat.completions.create(
         model=os.getenv("OPEN_ROUTER_MODEL"),  # Model name from environment
         messages=[
-            # System prompt to instruct the AI
-            {"role": "system", "content": "You are a TypeScript expert who improves React/TSX code."},
-            # User prompt with the code to optimize
-            {"role": "user", "content": f"Optimize & provide proper code for the following TypeScript/TSX code:\n\n{code}"}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
         ],
         temperature=0.7  # Controls randomness of output
     )
