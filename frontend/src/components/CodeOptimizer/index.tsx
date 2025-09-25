@@ -166,10 +166,19 @@ const CodeOptimizer = () => {
       {/* Output Section for optimized code or errors */}
       {output && (
         <div className="mt-6 p-5 border border-gray-300 bg-gray-50 rounded-lg shadow-inner">
-          <h2 className="font-semibold mb-3 text-gray-800">Optimized Code:</h2>
-          <pre className="bg-black text-green-400 p-4 rounded-lg overflow-y-auto whitespace-pre-wrap break-words text-sm max-h-96">
-            {output}
-          </pre>
+          {/* Show error message if output is an error */}
+          {output === "Please upload a file or paste some code." ? (
+            <span className="text-red-600 font-semibold">{output}</span>
+          ) : (
+            <>
+              <h2 className="font-semibold mb-3 text-gray-800">
+                Optimized Code:
+              </h2>
+              <pre className="bg-black text-green-400 p-4 rounded-lg overflow-y-auto whitespace-pre-wrap break-words text-sm max-h-96">
+                {output}
+              </pre>
+            </>
+          )}
         </div>
       )}
     </div>
