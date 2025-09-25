@@ -45,6 +45,9 @@ async def optimize(
     if not code:
         return {"error": "No code or file provided."}
 
-    # Call the optimization service and return the result
-    optimized = await optimize_tsx_code(code, system_prompt, user_prompt)
-    return {"optimized": optimized}
+    try:
+        optimized = await optimize_tsx_code(code, system_prompt, user_prompt)
+        return {"optimized": optimized}
+    except Exception as e:
+        from fastapi import Response
+        return Response(content=f'{str(e)}', status_code=500)

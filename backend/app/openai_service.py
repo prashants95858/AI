@@ -28,7 +28,7 @@ async def optimize_tsx_code(code: str, system_prompt: str = None, user_prompt: s
     
         # Call OpenAI chat completion API
         response = client.chat.completions.create(
-            model=os.getenv("OPENAI_MODEL"), # Model name from environment (e.g., gpt-5)
+            model="gpt-4o", # Other models: "gpt-4o-mini", "gpt-4o-2024-08-06", "gpt-4o-2024-08-06-preview"
             messages=[
                 # System prompt to instruct the AI
                 {"role": "system", "content": system_prompt},

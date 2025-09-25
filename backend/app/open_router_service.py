@@ -35,7 +35,7 @@ async def optimize_tsx_code(
         
     # Call OpenRouter chat completion API
     response = client.chat.completions.create(
-        model=os.getenv("OPEN_ROUTER_MODEL"),  # Model name from environment
+        model="mistralai/mistral-7b-instruct",  # other models: "mistralai/mistral-7b", "mistralai/mistral-7b-instruct-v0.1", "openai/gpt-3.5-turbo"
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}

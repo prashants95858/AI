@@ -30,6 +30,16 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload # to start the backend server
 ```
 
+### Run unit test for backend
+
+```bash
+cd backend
+python3 -m venv venv # here we can use python or python3 based on what you have selected
+source venv/bin/activate
+pytest #run the test case
+pytest --cov=. --cov-report=html #generate coverage report.
+```
+
 ### 📁 Setup frontend
 
 ```bash
