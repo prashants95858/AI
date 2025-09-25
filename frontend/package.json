@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "./toggle-babel.sh next && next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest",
+    "test": "./toggle-babel.sh jest && jest",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
