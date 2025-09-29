@@ -24,7 +24,9 @@ class MockClient:
     chat = Chat()
 
 
-# Test for successful code optimization
+    # TC#B15
+    # Description: Test for successful code optimization (OpenRouter)
+    # Expected Result: Returns optimized code (200 OK)
 @pytest.mark.asyncio
 async def test_optimize_tsx_code_positive(monkeypatch):
     # Patch the OpenRouter client with the mock client
@@ -34,7 +36,9 @@ async def test_optimize_tsx_code_positive(monkeypatch):
     assert result == 'mock optimized code'
 
 
-# Test for error handling when the API raises an exception
+    # TC#B25
+    # Description: Test for error handling when the API raises an exception (OpenRouter)
+    # Expected Result: Returns error (500 Internal Server Error)
 @pytest.mark.asyncio
 async def test_optimize_tsx_code_negative(monkeypatch):
     # Mock client that raises an error when called

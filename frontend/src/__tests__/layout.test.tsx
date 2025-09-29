@@ -6,6 +6,9 @@ import RootLayout from "../app/layout";
 // Test suite for the RootLayout component
 describe("RootLayout", () => {
   // Test: RootLayout renders html and body tags with correct classes and children
+  // TC#F12
+  // Description: RootLayout renders html and body tags with correct classes and children
+  // Expected Result: HTML and body tags with correct classes and children are rendered
   it("renders html and body tags with correct classes and children", () => {
     render(
       <RootLayout>

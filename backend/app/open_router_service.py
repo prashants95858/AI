@@ -40,7 +40,10 @@ async def optimize_tsx_code(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.7  # Controls randomness of output
+        temperature=0.7,  # Controls randomness of output
+        max_tokens=1000,  # Limit response length
+        top_p=0.6,          # Nucleus sampling parameter
+        frequency_penalty=0.7,  # No penalty for frequency
     )
     # Return the optimized code from the response
     return response.choices[0].message.content
