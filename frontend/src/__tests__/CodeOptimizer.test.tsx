@@ -12,6 +12,9 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 // Test suite for CodeOptimizer component
 describe("CodeOptimizer", () => {
   // Test: Shows backend error from axios response
+  // TC#F1
+  // Description: Shows backend error from axios response
+  // Expected Result: Error message is displayed
   it("renders backend error from axios response", async () => {
     mockedAxios.post.mockResolvedValueOnce({
       data: { error: "custom backend error" },
@@ -30,6 +33,9 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Renders nothing if axios response has no optimized or error
+  // TC#F3
+  // Description: Renders nothing if axios response has no optimized or error
+  // Expected Result: No output is rendered
   it("renders nothing if axios response has no optimized or error", async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: {} });
     render(<CodeOptimizer />);
@@ -49,6 +55,9 @@ describe("CodeOptimizer", () => {
     });
   });
   // Test: Shows error message from catch block on network error
+  // TC#F14
+  // Description: Shows error message from catch block on network error
+  // Expected Result: Error message is displayed
   it("renders error message from catch block on network error", async () => {
     const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     mockedAxios.post.mockRejectedValueOnce(new Error("Network error"));
@@ -68,6 +77,9 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Resets all fields after successful submission
+  // TC#F2
+  // Description: Resets all fields after successful submission
+  // Expected Result: All fields are reset
   it("resets all fields after successful submission", async () => {
     mockedAxios.post.mockResolvedValueOnce({
       data: { optimized: "reset test" },
@@ -97,6 +109,9 @@ describe("CodeOptimizer", () => {
     ).toHaveValue("");
   });
   // Test: Output section is not rendered when output is empty
+  // TC#F5
+  // Description: Output section is not rendered when output is empty
+  // Expected Result: No output is rendered
   it("does not render output section when output is empty", () => {
     render(<CodeOptimizer />);
     expect(screen.queryByText(/Optimized Code:/i)).toBeNull();
@@ -106,6 +121,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Renders error output branch only
+  // TC#F16
+  // Description: Only error output branch is triggered
+  // Expected Result: Error output is rendered
+
   it("renders error output branch only", async () => {
     render(<CodeOptimizer />);
     fireEvent.change(
@@ -146,6 +165,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Disables textarea when file is selected
+  // TC#F4
+  // Description: File is selected
+  // Expected Result: Textarea is disabled
+
   it("disables textarea when file is selected", () => {
     render(<CodeOptimizer />);
     const file = new File(["export default function Test() {}"], "Test.tsx", {
@@ -159,6 +182,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Enables textarea when no file is selected
+  // TC#F5
+  // Description: No file is selected
+  // Expected Result: Textarea is enabled
+
   it("enables textarea when no file is selected", () => {
     render(<CodeOptimizer />);
     expect(
@@ -174,6 +201,10 @@ describe("CodeOptimizer", () => {
     });
   }
   // Test: Handles file upload and submits file
+  // TC#F6
+  // Description: Upload and submit file
+  // Expected Result: File is submitted and result displayed
+
   it("handles file upload and submits file", async () => {
     const file = new File(["export default function Test() {}"], "Test.tsx", {
       type: "text/tsx",
@@ -220,6 +251,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Shows loading state when optimizing
+  // TC#F10
+  // Description: Submit form
+  // Expected Result: Loading indicator is shown
+
   it("shows loading state when optimizing", async () => {
     mockedAxios.post.mockImplementation(() =>
       delayedAxiosResponse({ optimized: "done" })
@@ -259,6 +294,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Allows keyboard submit (Enter)
+  // TC#F7
+  // Description: Press Enter to submit
+  // Expected Result: Form is submitted
+
   it("allows keyboard submit (Enter)", async () => {
     mockedAxios.post.mockResolvedValueOnce({
       data: { optimized: "keyboard submit" },
@@ -286,6 +325,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Renders all input fields and buttons
+  // TC#F11
+  // Description: Render all input fields and buttons
+  // Expected Result: All fields and buttons are visible
+
   it("renders all input fields and buttons", () => {
     render(<CodeOptimizer />);
     expect(screen.getByText(/TSX Optimizer/i)).toBeInTheDocument();
@@ -305,6 +348,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Shows error if neither file nor code is provided
+  // TC#F15
+  // Description: Submit with neither file nor code
+  // Expected Result: Error message is displayed
+
   it("shows error if neither file nor code is provided", async () => {
     render(<CodeOptimizer />);
     // Enter a space to enable the submit button
@@ -323,6 +370,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Submits pasted code and displays optimized result
+  // TC#F8
+  // Description: Paste code and submit
+  // Expected Result: Optimized result is displayed
+
   it("submits pasted code and displays optimized result", async () => {
     mockedAxios.post.mockResolvedValueOnce({
       data: { optimized: "optimized code" },
@@ -343,6 +394,10 @@ describe("CodeOptimizer", () => {
   });
 
   // Test: Submits user and system prompts
+  // TC#F9
+  // Description: Submit user and system prompts
+  // Expected Result: Optimized result is displayed
+
   it("submits user and system prompts", async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { optimized: "result" } });
     render(<CodeOptimizer />);
