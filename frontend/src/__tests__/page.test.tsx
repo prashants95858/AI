@@ -6,6 +6,9 @@ import Home from "../app/page";
 // Test suite for the Home page
 describe("Home page", () => {
   // Test: Home page renders main container and CodeOptimizer title
+  // TC#F13
+  // Description: Home page renders main container and CodeOptimizer title
+  // Expected Result: Main container and CodeOptimizer title are rendered
   it("renders the main container and CodeOptimizer component", () => {
     render(<Home />);
     // Check for main container element

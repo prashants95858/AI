@@ -37,6 +37,8 @@ async def optimize_tsx_code(code: str, system_prompt: str = None, user_prompt: s
             ],
             temperature=0.3,  # Controls randomness of output
             max_tokens=200,   # Limit response length
+            top_p=0.6,          # Nucleus sampling parameter
+            frequency_penalty=0.7,  # No penalty for frequency
         )
         # Return the optimized code from the response
         return response.choices[0].message.content.strip()

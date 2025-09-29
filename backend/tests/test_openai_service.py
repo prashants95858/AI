@@ -24,7 +24,9 @@ class MockClient:
     chat = Chat()
 
 
-# Test for successful code optimization
+    # TC#B14
+    # Description: Test for successful code optimization (OpenAI)
+    # Expected Result: Returns optimized code (200 OK)
 @pytest.mark.asyncio
 async def test_optimize_tsx_code_positive(monkeypatch):
     # Patch the OpenAI client with the mock client
@@ -34,7 +36,9 @@ async def test_optimize_tsx_code_positive(monkeypatch):
     assert result == 'mock optimized code'
 
 
-# Test for error handling when the API raises an exception
+    # TC#B24
+    # Description: Test for error handling when the API raises an exception (OpenAI)
+    # Expected Result: Returns error (500 Internal Server Error)
 @pytest.mark.asyncio
 async def test_optimize_tsx_code_negative(monkeypatch):
     # Mock client that raises an error when called
